@@ -299,3 +299,13 @@ docker rm $(docker ps -aq)
 ```
 docker rm -f $(docker ps -aq)
 ```
+
+### Renaming a container
+```
+docker rename ubuntu1 c1
+```
+In the above command, 'ubuntu1' is the existing name while 'c1' is the new name.
+You may verify the change as shown below
+```
+docker ps
+```
