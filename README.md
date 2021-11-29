@@ -106,3 +106,16 @@ Docker Registry
             a private registry with Sonatype Nexus or JFrog Artifactory
           - you also setup a private registry for learning purpose using registry:2 image from Docker Hub
     - Local Docker Registry is created automatically on the same machine where Docker Server is running
+
+### Installing Docker Community Edition
+```
+sudo yum install yum-utils
+sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+sudo yum install docker-ce --allow-erasing
+```
+
+### Enable and start the Docker Server
+```
+sudo systemctl enable docker
+sudo systemctl start docker
+```
