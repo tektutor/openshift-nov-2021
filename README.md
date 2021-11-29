@@ -39,7 +39,6 @@
 
   - makes server consolidation possible
 
-
 Container Technology
  - application virtualization
  - lightweight virtualization techology
@@ -87,5 +86,22 @@ Docker Runtime
    their communication.  This is the defaut client/server communication mode, however REST api can be enabled ondemand.
  - Docker Application Engine also supports REST API, if enabled then even remote Docker and third-party applications
    can communicate with Docker Application Engine
-   
-   
+
+Docker Images
+  - specification of a container
+  - you could install all the software that you need in a container on the image level
+  - similar to ISO or DVD images or VMWare image
+
+Docker Containers
+   - instance of a Docker Image
+   - multiple containers can be created from a single Docker Image
+ 
+Docker Registry
+   - collection of many Docker Images
+   - 3 types
+       1. Local Docker Registry - this gets created autmatically , when you install docker on your local machine
+       2. Remote Docker Registry - Docker Hub ( Website maintained by Docker Inc )
+       3. Private Docker Registry (optional) 
+          - If you need Remote Docker Registry like functionalities within your Organization you may setup
+            a private registry with Sonatype Nexus or JFrog Artifactory
+          - you also setup a private registry for learning purpose using registry:2 image from Docker Hub
