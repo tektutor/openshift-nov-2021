@@ -202,3 +202,15 @@ The expected output is
 CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
 [root@tektutor ~]# 
 </pre>
+Since the hello-world container got terminated, we aren't able to see that container in the above output.
+
+If you wish to see every container irrespective whether they are in running state or existed state, then try this
+```
+docker ps -a
+```
+The expected output is
+<pre>
+[root@tektutor ~]# docker ps -a
+CONTAINER ID   IMAGE                COMMAND    CREATED         STATUS                     PORTS     NAMES
+1be93ea842b3   hello-world:latest   "/hello"   4 minutes ago   Exited (0) 4 minutes ago             gracious_knuth
+</pre>
