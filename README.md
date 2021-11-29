@@ -105,3 +105,4 @@ Docker Registry
           - If you need Remote Docker Registry like functionalities within your Organization you may setup
             a private registry with Sonatype Nexus or JFrog Artifactory
           - you also setup a private registry for learning purpose using registry:2 image from Docker Hub
+    - Local Docker Registry is created automatically on the same machine where Docker Server is running
