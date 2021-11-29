@@ -232,3 +232,70 @@ e1db6b37a87a   ubuntu:16.04   "/bin/bash"   2 seconds ago    Up 1 second        
 e4221fa1b9c4   ubuntu:16.04   "/bin/bash"   41 seconds ago   Up 39 seconds             ubuntu1
 [root@tektutor ~]# 
 </pre>
+
+### Creating containers in foreground mode
+```
+docker run -it --name ubuntu3 --hostname ubuntu3 ubuntu:16.04 /bin/bash
+```
+You will be taken inside the interactive container's shell immediately after the container is created.
+You may verify the hostname of the container
+```
+hostname
+```
+You may verify the IP address of the container
+```
+hostname -i
+```
+You may list the files and directories inside the container
+```
+ls -l
+```
+You try to exit the container.  When you exit it terminates the bash that runs inside the container, hence the
+container will be Exited.
+
+```
+exit
+```
+You can start the exited container as shown below
+```
+docker start ubuntu3
+```
+You may open a new interactive terminal inside the container
+```
+docker exec -it ubuntu3 bash
+```
+If you exit from the shell launched via exec command, it won't stop the container
+```
+exit
+```
+You may verify this behaviour, by listing containers
+```
+docker ps
+```
+
+### Deleting stopped container
+```
+docker rm ubuntu3
+```
+
+### Deleting a running container
+```
+docker stop ubuntu1
+docker rm ubuntu1
+```
+
+### Deleting a running container forcibly
+```
+docker rm -f ubuntu2
+```
+
+### Deleting multiple running containers graciously
+```
+docker stop $(docker ps -q)
+docker rm $(docker ps -aq)
+```
+
+### Deleting multiple running container forcibly
+```
+docker rm -f $(docker ps -aq)
+```
