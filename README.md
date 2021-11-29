@@ -191,3 +191,14 @@ For more examples and ideas, visit:
 
 [root@tektutor ~]# 
 </pre>
+
+### Listing the currently running containers
+```
+docker ps
+```
+The expected output is
+<pre>
+[root@tektutor ~]# docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+[root@tektutor ~]# 
+</pre>
