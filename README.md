@@ -214,3 +214,21 @@ The expected output is
 CONTAINER ID   IMAGE                COMMAND    CREATED         STATUS                     PORTS     NAMES
 1be93ea842b3   hello-world:latest   "/hello"   4 minutes ago   Exited (0) 4 minutes ago             gracious_knuth
 </pre>
+
+### Creating containers in background mode
+```
+docker run -dit --name ubuntu1 --hostname ubuntu1 ubuntu:16.04 /bin/bash
+docker run -dit --name ubuntu2 --hostname ubuntu2 ubuntu:16.04 /bin/bash
+```
+You can verify if both the containers are running
+```
+docker ps
+```
+The expected output is
+<pre>
+[root@tektutor ~]# docker ps
+CONTAINER ID   IMAGE          COMMAND       CREATED          STATUS          PORTS     NAMES
+e1db6b37a87a   ubuntu:16.04   "/bin/bash"   2 seconds ago    Up 1 second               ubuntu2
+e4221fa1b9c4   ubuntu:16.04   "/bin/bash"   41 seconds ago   Up 39 seconds             ubuntu1
+[root@tektutor ~]# 
+</pre>
