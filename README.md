@@ -295,6 +295,11 @@ docker stop $(docker ps -q)
 docker rm $(docker ps -aq)
 ```
 
+### Restarting a container
+```
+docker restart ubuntu1
+```
+
 ### Deleting multiple running container forcibly
 ```
 docker rm -f $(docker ps -aq)
@@ -308,4 +313,18 @@ In the above command, 'ubuntu1' is the existing name while 'c1' is the new name.
 You may verify the change as shown below
 ```
 docker ps
+```
+
+### Creating a nginx web server container
+```
+docker run -d --name nginx1 nginx:1.18
+```
+You may list the containers as shown below
+```
+docker ps
+```
+
+### Checking application logs
+```
+docker logs nginx1
 ```
