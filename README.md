@@ -133,3 +133,13 @@ docker images
 ```
 docker pull hello-world:latest
 ```
+
+### Listing docker images from Local Docker Registry
+```
+docker images
+```
+
+### Finding details about your docker installation
+```
+docker info
+```
