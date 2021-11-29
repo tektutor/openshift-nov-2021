@@ -39,7 +39,7 @@
 
   - makes server consolidation possible
 
-Container Technology
+### Container Technology
  - application virtualization
  - lightweight virtualization techology
     - they don't need dedicated hardware resources
@@ -64,19 +64,19 @@ Container Technology
     - to create additional processes and it monitors the health of those additional processes. This is a overhead, hence as much as possible run one per application per container
     - 
 
-Container Runtimes
+### Container Runtimes
   - LXC - low-level not so user-friendly
   - Docker - very user-friendly, hence very popular in the industry.  Docker a known vulnerabilty, Podman has solved
              it even before Docker, hence the industry started moving away from Docker
   - CRI-O - low-level not so user-friendly
   - Podman - slowly gaining popularity, mostly likely might takeaway the shares of Docker
    
- Container Orchestration Platforms
+### Container Orchestration Platforms
    - Docker SWARM - Docker Inc's native orchestration platform that supports only Docker Container Runtime
    - Google Kubernetes(K8s) - supports many different Container Runtimes, this is also time tested
    - RedHat OpenShift(IBM) - built on top of Google Kubernetes + CI/CD + Private Docker Registry, etc 
 
-Docker Runtime
+### Docker Runtime
  - developed by Docker Inc organization
  - developed in Go programming language
  - Client/Server Technology
@@ -87,16 +87,25 @@ Docker Runtime
  - Docker Application Engine also supports REST API, if enabled then even remote Docker and third-party applications
    can communicate with Docker Application Engine
 
-Docker Images
+### Docker Images
   - specification of a container
   - you could install all the software that you need in a container on the image level
   - similar to ISO or DVD images or VMWare image
+  - Each Docker Image is assigned with an unique 256 bit Image ID.
+  - Docker Images are broken down into one or more Docker Layers
+  - Every Docker Layer also has an unique Layer ID
 
-Docker Containers
+### Docker Layers
+  - Layers has all the installed softwares
+  - i.e files and folders
+  - many Layers put together forms the file system of the Docker container
+  - Docker uses a Union File System
+
+### Docker Containers
    - instance of a Docker Image
    - multiple containers can be created from a single Docker Image
  
-Docker Registry
+### Docker Registry
    - collection of many Docker Images
    - 3 types
        1. Local Docker Registry - this gets created autmatically , when you install docker on your local machine
