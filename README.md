@@ -112,7 +112,7 @@ Docker Registry
 su -
 yum install yum-utils
 yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
-yum install docker-ce --allowerasing
+yum install -y docker-ce --allowerasing
 ```
 
 ### Enable and start the Docker Server
@@ -120,4 +120,10 @@ yum install docker-ce --allowerasing
 su -
 systemctl enable docker
 systemctl start docker
+```
+
+### You can test if docker is installed
+```
+docker --version
+docker images
 ```
