@@ -112,7 +112,7 @@ Docker Registry
 su -
 yum install yum-utils
 yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
-yum install docker-ce --allow-erasing
+yum install docker-ce --allowerasing
 ```
 
 ### Enable and start the Docker Server
