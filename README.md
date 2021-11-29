@@ -109,13 +109,15 @@ Docker Registry
 
 ### Installing Docker Community Edition
 ```
-sudo yum install yum-utils
-sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
-sudo yum install docker-ce --allow-erasing
+su -
+yum install yum-utils
+yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+yum install docker-ce --allow-erasing
 ```
 
 ### Enable and start the Docker Server
 ```
-sudo systemctl enable docker
-sudo systemctl start docker
+su -
+systemctl enable docker
+systemctl start docker
 ```
