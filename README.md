@@ -127,3 +127,9 @@ systemctl start docker
 docker --version
 docker images
 ```
+## Managing Docker Images
+
+### Download docker image from Docker Hub Remote Registry to Local Docker Registry
+```
+docker pull hello-world:latest
+```
