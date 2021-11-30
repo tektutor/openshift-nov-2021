@@ -198,3 +198,30 @@ kubectl get po -w
 Now you would have noticed, the pods associated with hello deployment get Completed, but K8s things it got crashed and it is then replaced with another Pod, but hello pod will again complete and terminate as hello-world doesn't have a blocking application running inside.
 
 CrashLoopBackOff may also occur in case the application crashes due to some exception or lack of resource like memory, etc.,
+
+### Finding more details about Pod
+```
+kubectl describe pod/<pod-name>
+```
+
+### Finding more details about a replicaset
+```
+kubectl describe rs/<replicaset-name>
+```
+
+### Finding more details about a deployment
+```
+kubectl describe deploy/nginx
+```
+
+### You may even edit a live deployment, ofcourse only certain fields can be modified
+```
+docker edit deploy/nginx
+```
+
+### You may edit any type of object in Kubernetes
+```
+docker edit rs/<replicaset-name>
+docker edit po/<pod-name>
+```
+
