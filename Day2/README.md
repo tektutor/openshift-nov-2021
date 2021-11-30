@@ -115,7 +115,32 @@ Tools
   - kubelet - Kubernetes Agent (Service) runs on all nodes(master & worker nodes)
 
 
-### Installing kubectl 
+### Installing minikube K8s cluster
+```
+cd /home/rps/Downloads
+curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+sudo install minikube-linux-amd64 /usr/local/bin/minikube
+```
+See if minikube is added to path correctly
+```
+cd ~
+which minikube
+```
+You are supposed to see the below output
+<pre>
+[jegan@tektutor ~]$ which minikube
+/usr/local/bin/minikube
+</pre>
+
+Now you install minikube as shown below as rps user(non-admin)
+```
+sudo usermod -aG docker rps
+sudo su rps
+minikube start --driver=docker
+```
+If you see kubectl successfully configured, you are all set.
+
+### Installing kubectl (Do this as rps user from terminal)
 ```
 curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
 
