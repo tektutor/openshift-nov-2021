@@ -178,3 +178,23 @@ You can also list multiple K8s objects at one shot as shown below
 ```
 kubectl get deploy,rs,po
 ```
+
+### Understanding CrashLoopBackOff
+Let's deploy hello-world:latest application in K8s cluster
+
+```
+kubectl create deploy hello --image=hello-world:latest
+```
+
+Let's list the deployment, replicaset and pods
+```
+kubectl get deploy,rs,po
+```
+
+If you wish to watch interactively
+```
+kubectl get po -w
+```
+Now you would have noticed, the pods associated with hello deployment get Completed, but K8s things it got crashed and it is then replaced with another Pod, but hello pod will again complete and terminate as hello-world doesn't have a blocking application running inside.
+
+CrashLoopBackOff may also occur in case the application crashes due to some exception or lack of resource like memory, etc.,
