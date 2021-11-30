@@ -226,3 +226,11 @@ docker edit rs/<replicaset-name>
 docker edit po/<pod-name>
 ```
 
+### Scaling up nginx deployment
+```
+kubectl scale deploy nginx --replicas=12
+```
+You may watch the pod creation activity interactively as shown below
+```
+kubectl get po -w
+```
