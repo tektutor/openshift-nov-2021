@@ -168,13 +168,14 @@ kubectl get deployments
 kubectl get replicasets
 kubectl get pods
 ```
-In the above above, you may replace deployments with deployments or deploy
+In the above above, you may replace deployments with deployment or deploy
 
 Same way, you may replace replicasets with replicaset or rs
 
 Similary, you may interchange pods with pod or po
 
 You can also list multiple K8s objects at one shot as shown below
+
 ```
 kubectl get deploy,rs,po
 ```
