@@ -272,7 +272,7 @@ curl http://192.168.49.2:31164
 
 Each time you access the above URL, the call will be forwarded to one of the nginx Pod linked with the NodePort Service.
 
-You can also test the service discovey, i.e accessing the service using its name from within one of the Pod.
+You can also test the service discovery, i.e accessing the service using its name from within one of the Pod.
 You may get inside a Pod using the below command
 ```
 kubectl exec -it <your-nginx-pod-name> sh
@@ -312,3 +312,41 @@ curl http://nginx:80
 In the above command, the first URL demonstrates on how to access the clusterip service using its cluster ip and service port. The second URL demonstrates on how to access using service discovery ie. using its name and service port.
 
 Each time you access the above URL, the call will be forwarded to one of the nginx Pod linked with the ClusterIP Service.
+
+### Creating a LoadBalancer external service for nginx deployment
+LoadBalancer service is meant to be used in Cloud environment like AWS, Azure, etc.,
+This type of service in Cloud will create a ALB - application Load Balancer or ELB and routes the call to one of the Pods.
+If we create a LoadBalancer in the local (on-prem) it typically works just like a NodePort service.
+
+```
+kubectl expose deploy/nginx --type=LoadBalancer --port=80
+```
+Listing the services
+```
+kubectl get svc
+```
+
+Accessing the LoadBalancer service
+We need to identify the Node IP and the LoadBalancer assigned for nginx service.
+Let's find the IP address of the node using the below command
+```
+kubectl get nodes -o wide
+```
+In my case the minikube node IP was 192.168.49.2
+Now let's find the IP Address assigned for nginx LoadBalancer service.
+```
+kubectl describe svc/nginx
+```
+Generally the NodePort will be in the 30000 to 32767 range, asuming the NodePort assigned is 31164, you can access the LoadBalancer external service as shown below
+
+curl http://192.168.49.2:31164
+
+Each time you access the above URL, the call will be forwarded to one of the nginx Pod linked with the LoadBalancer Service.
+
+You can also test the service discovery, i.e accessing the service using its name from within one of the Pod.
+You may get inside a Pod using the below command
+```
+kubectl exec -it <your-nginx-pod-name> sh
+curl http://nginx:80
+```
+In the above URL, nginx is the name of the LoadBalancer service and 80 is the Service Port.
