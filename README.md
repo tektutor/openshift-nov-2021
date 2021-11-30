@@ -328,3 +328,73 @@ docker ps
 ```
 docker logs nginx1
 ```
+
+### Listing container whose name starts with 'ubuntu'
+```
+docker ps -f "name=ubuntu*"
+```
+
+### Listing containers whose image is ubuntu
+```
+docker ps =f "ancestor=ubuntu"
+```
+
+### Port forwarding
+```
+docker run -d --name nginx1 --hostname nginx1 -p 8001:80 nginx:1.18
+docker run -d --name nginx2 --hostname nginx2 -p 8002:80 nginx:1.18
+```
+Verify if both containers are running
+```
+docker ps -f "name=nginx*"
+```
+
+### Volume Mounting
+```
+mkdir -p /tmp/mysql
+docker run -d --name db1 --hostname db1 -e MYSQL_ROOT_PASSWORD=root -v /tmp/mysql:/var/lib/mysql mysql:latest
+```
+Verify if the db1 container is running
+```
+docker ps -f "name=db1"
+```
+You may now open a shell inside db1 container to run sql queries
+```
+docker exec -it db1 sh
+mysql -u root -p
+```
+When prompted for password, type 'root' without quotes.
+
+You may now executed the mysql queries in the mysql prompt
+```
+SHOW DATABASES;
+CREATE DATABASE tektutor;
+USE tektutor;
+CREATE TABLE Training (id int, name VARCHAR(30), duration VARCHAR(30));
+INSERT INTO Training VALUES ( 1, "DevOps", "5 Days" );
+INSERT INTO Training VALUES ( 2, "Microservices with SpringBoot", "5 Days");
+SELECT * FROM Training;
+```
+You may now exit the mysql prompt and then exit the container
+```
+exit
+exit
+```
+You may now delete the db1 container
+```
+docker rm -f db1
+```
+Let's create another container and mount the same volume
+```
+docker run -d --name db2 --hostname db2 -e MYSQL_ROOT_PASSWORD=root -v /tmp/mysql:/var/lib/mysql mysql:latest
+```
+Let's get inside the db2 container
+```
+docker exec -it db2 sh
+mysql -u root -p
+SHOW DATABASES;
+USE tektutor;
+SELECT * FROM Training;
+```
+As you can see, though db1 container was deleted we are still able to access the tektutor database and the records
+in the Training table as we are using an externally mounted volume.
