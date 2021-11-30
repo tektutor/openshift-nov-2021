@@ -244,3 +244,71 @@ You may watch the pod creation activity interactively as shown below
 kubectl get po -w
 ```
 To come out of watch mode, press Ctrl + c
+
+
+### Creating a NodePort external service for nginx deployment
+```
+kubectl expose deploy/nginx --type=NodePort --port=80
+```
+Listing the services
+```
+kubectl get svc
+```
+
+Accessing the NodePort service
+We need to identify the Node IP and the NodePort assigned for nginx service.
+Let's find the IP address of the node using the below command
+```
+kubectl get nodes -o wide
+```
+In my case the minikube node IP was 192.168.49.2
+Now let's find the NodePort assigned for nginx NodePort service.
+```
+kubectl describe svc/nginx
+```
+Generally the NodePort will be in the 30000 to 32767 range, asuming the NodePort assigned is 31164, you can access the NodePort external service as shown below
+
+curl http://192.168.49.2:31164
+
+Each time you access the above URL, the call will be forwarded to one of the nginx Pod linked with the NodePort Service.
+
+You can also test the service discovey, i.e accessing the service using its name from within one of the Pod.
+You may get inside a Pod using the below command
+```
+kubectl exec -it <your-nginx-pod-name> sh
+curl http://nginx:80
+```
+In the above URL, nginx is the name of the NodePort service and 80 is the Service Port.
+
+### Creating a ClusterIP internal service for nginx deployment
+```
+kubectl delete svc/nginx
+kubectl expose deploy/nginx --type=ClusterIP --port=80
+```
+Listing the services
+```
+kubectl get svc
+```
+
+Accessing the ClusterIP service
+We need to identify the Cluster IP to nginx service.
+Let's find the IP address of the node using the below command
+```
+kubectl describe svc/nginx
+```
+In my case the minikube node IP was 10.111.128.35
+
+You can access the ClusterIP internal service as shown below
+
+curl http://<cluster-ip-nginx-service:service-port
+curl http://10.111.128.35:80
+
+As this is an internal service, we need to get inside any one of the pod that is running in the cluster
+```
+kubectl exec -it <your-nginx-pod-name> sh
+curl http://10.111.128.35:80
+curl http://nginx:80
+```
+In the above command, the first URL demonstrates on how to access the clusterip service using its cluster ip and service port. The second URL demonstrates on how to access using service discovery ie. using its name and service port.
+
+Each time you access the above URL, the call will be forwarded to one of the nginx Pod linked with the ClusterIP Service.
