@@ -234,3 +234,13 @@ You may watch the pod creation activity interactively as shown below
 ```
 kubectl get po -w
 ```
+
+### Scaling down nginx deployment
+```
+kubectl scale deploy nginx --recplicas=3
+```
+You may watch the pod creation activity interactively as shown below
+```
+kubectl get po -w
+```
+To come out of watch mode, press Ctrl + c
