@@ -158,3 +158,21 @@ NAME       STATUS   ROLES                  AGE   VERSION
 minikube   Ready    control-plane,master   23m   v1.22.3
 </pre>
 
+### Create nginx deployment
+```
+kubectl create deployment nginx --image=nginx:1.18
+```
+You may now verify if the deployment is created successfuly
+```
+kubectl get deployments
+kubectl get replicasets
+kubectl get pods
+```
+In the above above, you may replace deployments with deployments or deploy
+Same way, you may replace replicasets with replicaset or rs
+similary, you may interchange pods with pod or po
+
+You can also list multiple K8s objects at one shot as shown below
+```
+kubectl get deploy,rs,po
+```
