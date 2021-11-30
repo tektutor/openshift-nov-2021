@@ -169,8 +169,10 @@ kubectl get replicasets
 kubectl get pods
 ```
 In the above above, you may replace deployments with deployments or deploy
+
 Same way, you may replace replicasets with replicaset or rs
-similary, you may interchange pods with pod or po
+
+Similary, you may interchange pods with pod or po
 
 You can also list multiple K8s objects at one shot as shown below
 ```
