@@ -115,7 +115,32 @@ Tools
   - kubelet - Kubernetes Agent (Service) runs on all nodes(master & worker nodes)
 
 
-### Installing kubectl 
+### Installing minikube K8s cluster
+```
+cd /home/rps/Downloads
+curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+sudo install minikube-linux-amd64 /usr/local/bin/minikube
+```
+See if minikube is added to path correctly
+```
+cd ~
+which minikube
+```
+You are supposed to see the below output
+<pre>
+[jegan@tektutor ~]$ which minikube
+/usr/local/bin/minikube
+</pre>
+
+Now you install minikube as shown below as rps user(non-admin)
+```
+sudo usermod -aG docker rps
+sudo su rps
+minikube start --driver=docker
+```
+If you see kubectl successfully configured, you are all set.
+
+### Installing kubectl (Do this as rps user from terminal)
 ```
 curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
 
@@ -133,3 +158,195 @@ NAME       STATUS   ROLES                  AGE   VERSION
 minikube   Ready    control-plane,master   23m   v1.22.3
 </pre>
 
+### Create nginx deployment
+```
+kubectl create deployment nginx --image=nginx:1.18
+```
+You may now verify if the deployment is created successfuly
+```
+kubectl get deployments
+kubectl get replicasets
+kubectl get pods
+```
+In the above above, you may replace deployments with deployment or deploy
+
+Same way, you may replace replicasets with replicaset or rs
+
+Similary, you may interchange pods with pod or po
+
+You can also list multiple K8s objects at one shot as shown below
+
+```
+kubectl get deploy,rs,po
+```
+
+### Understanding CrashLoopBackOff
+Let's deploy hello-world:latest application in K8s cluster
+
+```
+kubectl create deploy hello --image=hello-world:latest
+```
+
+Let's list the deployment, replicaset and pods
+```
+kubectl get deploy,rs,po
+```
+
+If you wish to watch interactively
+```
+kubectl get po -w
+```
+Now you would have noticed, the pods associated with hello deployment get Completed, but K8s things it got crashed and it is then replaced with another Pod, but hello pod will again complete and terminate as hello-world doesn't have a blocking application running inside.
+
+CrashLoopBackOff may also occur in case the application crashes due to some exception or lack of resource like memory, etc.,
+
+### Finding more details about Pod
+```
+kubectl describe pod/<pod-name>
+```
+
+### Finding more details about a replicaset
+```
+kubectl describe rs/<replicaset-name>
+```
+
+### Finding more details about a deployment
+```
+kubectl describe deploy/nginx
+```
+
+### You may even edit a live deployment, ofcourse only certain fields can be modified
+```
+docker edit deploy/nginx
+```
+
+### You may edit any type of object in Kubernetes
+```
+docker edit rs/<replicaset-name>
+docker edit po/<pod-name>
+```
+
+### Scaling up nginx deployment
+```
+kubectl scale deploy nginx --replicas=12
+```
+You may watch the pod creation activity interactively as shown below
+```
+kubectl get po -w
+```
+
+### Scaling down nginx deployment
+```
+kubectl scale deploy nginx --recplicas=3
+```
+You may watch the pod creation activity interactively as shown below
+```
+kubectl get po -w
+```
+To come out of watch mode, press Ctrl + c
+
+
+### Creating a NodePort external service for nginx deployment
+```
+kubectl expose deploy/nginx --type=NodePort --port=80
+```
+Listing the services
+```
+kubectl get svc
+```
+
+Accessing the NodePort service
+We need to identify the Node IP and the NodePort assigned for nginx service.
+Let's find the IP address of the node using the below command
+```
+kubectl get nodes -o wide
+```
+In my case the minikube node IP was 192.168.49.2
+Now let's find the NodePort assigned for nginx NodePort service.
+```
+kubectl describe svc/nginx
+```
+Generally the NodePort will be in the 30000 to 32767 range, asuming the NodePort assigned is 31164, you can access the NodePort external service as shown below
+
+curl http://192.168.49.2:31164
+
+Each time you access the above URL, the call will be forwarded to one of the nginx Pod linked with the NodePort Service.
+
+You can also test the service discovery, i.e accessing the service using its name from within one of the Pod.
+You may get inside a Pod using the below command
+```
+kubectl exec -it <your-nginx-pod-name> sh
+curl http://nginx:80
+```
+In the above URL, nginx is the name of the NodePort service and 80 is the Service Port.
+
+### Creating a ClusterIP internal service for nginx deployment
+```
+kubectl delete svc/nginx
+kubectl expose deploy/nginx --type=ClusterIP --port=80
+```
+Listing the services
+```
+kubectl get svc
+```
+
+Accessing the ClusterIP service
+We need to identify the Cluster IP to nginx service.
+Let's find the IP address of the node using the below command
+```
+kubectl describe svc/nginx
+```
+In my case the minikube node IP was 10.111.128.35
+
+You can access the ClusterIP internal service as shown below
+
+curl http://<cluster-ip-nginx-service:service-port
+curl http://10.111.128.35:80
+
+As this is an internal service, we need to get inside any one of the pod that is running in the cluster
+```
+kubectl exec -it <your-nginx-pod-name> sh
+curl http://10.111.128.35:80
+curl http://nginx:80
+```
+In the above command, the first URL demonstrates on how to access the clusterip service using its cluster ip and service port. The second URL demonstrates on how to access using service discovery ie. using its name and service port.
+
+Each time you access the above URL, the call will be forwarded to one of the nginx Pod linked with the ClusterIP Service.
+
+### Creating a LoadBalancer external service for nginx deployment
+LoadBalancer service is meant to be used in Cloud environment like AWS, Azure, etc.,
+This type of service in Cloud will create a ALB - application Load Balancer or ELB and routes the call to one of the Pods.
+If we create a LoadBalancer in the local (on-prem) it typically works just like a NodePort service.
+
+```
+kubectl expose deploy/nginx --type=LoadBalancer --port=80
+```
+Listing the services
+```
+kubectl get svc
+```
+
+Accessing the LoadBalancer service
+We need to identify the Node IP and the LoadBalancer assigned for nginx service.
+Let's find the IP address of the node using the below command
+```
+kubectl get nodes -o wide
+```
+In my case the minikube node IP was 192.168.49.2
+Now let's find the IP Address assigned for nginx LoadBalancer service.
+```
+kubectl describe svc/nginx
+```
+Generally the NodePort will be in the 30000 to 32767 range, asuming the NodePort assigned is 31164, you can access the LoadBalancer external service as shown below
+
+curl http://192.168.49.2:31164
+
+Each time you access the above URL, the call will be forwarded to one of the nginx Pod linked with the LoadBalancer Service.
+
+You can also test the service discovery, i.e accessing the service using its name from within one of the Pod.
+You may get inside a Pod using the below command
+```
+kubectl exec -it <your-nginx-pod-name> sh
+curl http://nginx:80
+```
+In the above URL, nginx is the name of the LoadBalancer service and 80 is the Service Port.
