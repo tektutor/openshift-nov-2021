@@ -154,6 +154,13 @@ sudo su rps
 ```
 
 ### Configure Docker Engine to use systemd driver in Master and Worker Nodes
+
+Before editing the daemon.json, let's enable and start docker so that it will create /etc/docker folder.
+```
+sudo systemctl enable docker
+sudo systemctl start docker
+```
+
 sudo vim /etc/docker/daemon.json
 
 ```
