@@ -210,11 +210,6 @@ EOF
 sudo yum install -y kubelet kubeadm kubectl --disableexcludes=kubernetes
 ```
 
-### Uninstall Microk8s
-```
-sudo snap remove microk8s
-```
-
 ### Configure kubelet in Master and Worker Nodes
 ```
 sudo vim /etc/sysconfig/kubelet
