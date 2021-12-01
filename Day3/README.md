@@ -149,8 +149,8 @@ sudo yum-config-manager \
     --add-repo \
     https://download.docker.com/linux/centos/docker-ce.repo
 sudo yum install -y docker-ce --allowerasing
-sudo usermod -aG docker user
-sudo su user
+sudo usermod -aG docker rps
+sudo su rps
 ```
 
 ### Configure Docker Engine to use systemd driver in Master and Worker Nodes
