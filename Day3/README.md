@@ -245,10 +245,14 @@ sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
 ```
 
-In order access the cluster without issues after machine reboot, add the below to /root/.bashrc
+In order to access the cluster without issues after machine reboots, add the below to /root/.bashrc
 Do the below as root user
 ```
 export KUBECONFIG=/etc/kubernetes/admin.conf
+```
+In order to apply the export changes done in the /root/.bashrc, you need to manually run this
+```
+source /root/.bashrc
 ```
 
 Save your join token in a file on the Master Node, the token varies on every system and every time you type kubeadm init, hence you need to save your join token for your reference before you clear your terminal screen.
