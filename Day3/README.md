@@ -229,13 +229,17 @@ sudo systemctl restart kubelet
 ### Bootstrapping Master Node as root user
 ```
 kubeadm init --pod-network-cidr=192.168.0.0/16
+```
 
+Do the below steps as rps user
+```
 mkdir -p $HOME/.kube
-cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
-chown $(id -u):$(id -g) $HOME/.kube/config
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
 ```
 
 In order access the cluster without issues after machine reboot, add the below to /root/.bashrc
+Do the below as root user
 ```
 export KUBECONFIG=/etc/kubernetes/admin.conf
 ```
