@@ -83,3 +83,29 @@ You may also access the ClusterIP service as shown below
 ```
 http://<clusterip-service-ip>:80
 ```
+
+### Creating a LoadBalancer external service declarative way
+LoadBalancer services are meant to be in cloud environments like AWS, Azure, GCP, etc., When used in bare-metal like our RPS Lab, it works similar to NodePort service.
+
+Make sure you have deleted the existing nginx service, just in case 
+```
+kubectl delete svc/nginx
+```
+
+```
+cd ~/openshift-nov-2021
+git pull
+cd Day4/manifests
+kubectl apply -f nginx-loadbalancer-service.yml
+```
+You may list and describe details about the loadbalancer service you just now created
+```
+kubectl describe svc/nginx
+```
+You may then acess the LoadBalancer service as
+```
+curl http://master:30958
+curl http://worker-1:30958
+curl http://worker-2:30958
+```
+You need to replace 30958 port with the nodeport that is assigned for your loadbalancer service.
