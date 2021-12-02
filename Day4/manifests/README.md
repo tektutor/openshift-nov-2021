@@ -1,3 +1,8 @@
+### Installing git in CentOS
+```
+sudo yum install -y git
+```
+
 ### Cloning the TekTutor openshift repository as rps user
 ```
 cd ~
