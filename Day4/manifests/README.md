@@ -108,4 +108,4 @@ curl http://master:30958
 curl http://worker-1:30958
 curl http://worker-2:30958
 ```
-You need to replace 30958 port with the nodeport that is assigned for your loadbalancer service.
+You need to replace 30958 port with the nodeport that is assigned to your loadbalancer service.
