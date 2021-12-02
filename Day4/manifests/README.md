@@ -87,6 +87,13 @@ http://<clusterip-service-ip>:80
 ### Creating a LoadBalancer external service declarative way
 LoadBalancer services are meant to be in cloud environments like AWS, Azure, GCP, etc., When used in bare-metal like our RPS Lab, it works similar to NodePort service.
 
+This type of service will create an ALB/ELB in the AWS/Azure/GCP ,etc. Hence this will lead to extra charges. In case of
+bare metal environment there will be no external LoadBalancer unless you created one manually.  Hence we can use the IP address of any one of the K8s nodes.
+```
+kubectl get nodes -o wide
+```
+Alternatively, you may use the hostname of master, worker-1 or worker-2 as configured in the /etc/hosts.
+
 Make sure you have deleted the existing nginx service, just in case 
 ```
 kubectl delete svc/nginx
