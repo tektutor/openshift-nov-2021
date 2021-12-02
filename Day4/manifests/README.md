@@ -2,6 +2,7 @@
 ```
 sudo yum install -y git
 ```
+When prompted for password, type 'rps@12345' without quotes.
 
 ### Cloning the TekTutor openshift repository as rps user
 ```
@@ -71,4 +72,14 @@ You may then acess the ClusterIP service as
 ```
 kubectl exec -it your-nginx-podname sh
 curl http://nginx:80
+```
+
+You can describe the clusterIP service to find its cluster ip
+```
+kubectl describe svc/nginx
+```
+
+You may also access the ClusterIP service as shown below
+```
+http://<clusterip-service-ip>:80
 ```
