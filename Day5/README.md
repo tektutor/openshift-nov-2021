@@ -2,7 +2,7 @@
 
 ## Overview
 
-## Installing OpenShift in CentOS 7
+## Installing OpenShift in CentOS 7.7
 
 ### Installing Docker Community Edition as rps user
 ```
