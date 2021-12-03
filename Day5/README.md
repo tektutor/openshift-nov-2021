@@ -107,3 +107,30 @@ https://127.0.0.1:8443/console
 ```
 
 
+### Finding OpenShift Docker Registry details
+```
+oc login -u system:admin
+oc get svc --all-namespaces
+```
+The expected output is
+<pre>
+[jegan@localhost openshift-nov-2021]$ oc get svc --all-namespaces
+NAMESPACE                       NAME                          TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)                   AGE
+<b>default                         docker-registry               ClusterIP   172.30.1.1       <none>        5000/TCP</b>                  11h
+default                         kubernetes                    ClusterIP   172.30.0.1       <none>        443/TCP                   11h
+default                         router                        ClusterIP   172.30.227.176   <none>        80/TCP,443/TCP,1936/TCP   11h
+kube-dns                        kube-dns                      ClusterIP   172.30.0.2       <none>        53/UDP,53/TCP             11h
+openshift-apiserver             api                           ClusterIP   172.30.50.226    <none>        443/TCP                   11h
+openshift-service-cert-signer   service-serving-cert-signer   ClusterIP   172.30.192.20    <none>        443/TCP                   11h
+openshift-web-console           webconsole                    ClusterIP   172.30.236.73    <none>        443/TCP                   11h
+</pre>
+
+### Pushing Docker Hub Images into OpenShift Private Docker Registry
+```
+oc login -u developer:developer
+oc new-project tektutor
+docker login -u openshift -p $(oc whoami -t) 172.30.1.1:5000
+docker pull docker.io/nginx:1.20
+docker tag docker.io/nginx:1.20 172.30.1.1:5000/tektutor/nginx:1.20
+docker push 172.30.1.1:5000/tektutor/nginx:1.20
+```
