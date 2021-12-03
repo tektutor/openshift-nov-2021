@@ -1,3 +1,22 @@
+### What is an Ingress Controller?
+- constants looks for new Ingress resources created within K8s cluster
+- picks the Ingress rules defined and then applies those rules by configuring the HAProxy or Nginx or someother Load Balancer
+- 
+
+
+# HELM
+- Helm is a package manager for Kubernetes and OpenShift
+- all the manifest files(yaml/json) can be bundled as a package and installed as a zip into K8s/OpenShift cluster
+- it is an open source tool
+- Official installation instructions found here https://helm.sh/docs/intro/install/
+
+## Installing Helm
+```
+curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+chmod 700 get_helm.sh
+./get_helm.sh
+```
+
 # Openshift
 
 ## Overview
